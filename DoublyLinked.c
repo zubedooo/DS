@@ -1,111 +1,80 @@
 #include<stdio.h>
 #include<stdlib.h>
-struct node
+typedef struct node
 {
-        int data;
-        struct node* rlink;
-        struct node* llink;
-};
-typedef struct node* nodeptr;
-void search(nodeptr item, nodeptr node, nodeptr* pos)
+    struct node *ll;
+    int data;
+    struct node *rl;
+}*listp;
+void insert(int data,listp ptr)
 {
-    *pos=NULL;
-        while(node!=NULL&&node->data<item->data)
-        {
-                *pos=node;
-                node=node->rlink;
-        }
-
-        return;
+    listp newnode,node;
+    newnode=(listp)malloc(sizeof(* newnode));
+    newnode->data=data;
+    node=ptr->ll;
+    newnode->ll=node;
+    newnode->rl=node->rl;
+    node->rl->ll=newnode;
+    node->rl=newnode;
 }
-void insert(nodeptr item, nodeptr pos, nodeptr* head)
+void delete(listp ptr)
 {
-
-        if(!pos)
-        {
-                item->rlink=*head;
-                (*head)->llink=item;
-                *head=item;
-                return;
-        }
-        item->rlink=pos->rlink;
-        if(pos->rlink)
-                pos->rlink->llink=item;
-        pos->rlink=item;
-        item->llink=pos;
+    int data;
+    listp node;
+    node=ptr;
+    printf("enter data to be deleted\n");
+    scanf("%d",&data);
+    for(node=node->rl;((node-> data)!=data)&& (node->rl!=ptr);node=node->rl) ;
+    if(node==ptr)
+        printf("only header node left and header node cant be deleted");
+    else{
+        node->ll->rl=node->rl;
+        node->rl->ll=node->ll;
+        printf("deleted %d\n",node->data);
+        free(node);
+    }
 }
-void delete(nodeptr* head, int key)
+void displayf(listp ptr)
 {
-        nodeptr node=*head;
-        for(;node;node=node->rlink)
-        {
-                if(node->data==key)
-                {
-                        if(node->llink)
-                                node->llink->rlink=node->rlink;
-                        else
-                                *head=node->rlink;
-                        if(node->rlink)
-                                node->rlink->llink=node->llink;
-                        free(node);
-                }
-        }
-}
-void display(nodeptr node)
-{
-        for(;node;node=node->rlink)
-        {
-                printf("%d\t",node->data);
-        }
-        printf("\n");
-}
-void revdisplay(nodeptr head)
-{ nodeptr node=head;
-  int i=0;
-  int a[20];
-  for(;node;node->rlink)
-  {  a[i]=node->data;
-     ++i;
-  }
-  for(;i>=0;i--)
+  listp node=ptr;
+  node=node->rl;
+  while(node!=ptr)
   {
-    printf("%d\t",a[i]);
+      printf("%d\n",node->data);
+      node=node->rl;
   }
- }
-int main()
+  printf("\n\n");
+}
+void displayb(listp ptr)
 {
-        nodeptr head,item,pos;
-        int choice,key;
-        head=(nodeptr)malloc(sizeof(struct node));
-        printf("Enter value of first node");
-        scanf("%d",&(head->data));
-        head->rlink=NULL;
-        head->llink=NULL;
-        while(1)
-        {
-                printf("Enter 1. Insert 2. Delete 3. Display 4.Reverse Display");
-                scanf("%d",&choice);
-                switch(choice)
-                {
-                        case 1:
-                                item=(nodeptr)malloc(sizeof(struct node));
-                                printf("Enter data to be inserted");
+  listp node=ptr;
+  node=node->ll;
+  while(node!=ptr)
+  {
+      printf("%d\n",node->data);
+      node=node->ll;
+  }
+  printf("\n\n");
+}
+void main()
+{
+    int ch,i,data;
+    listp node,head,ptr;
+    node=(listp)malloc(sizeof(* node));
+    head=(listp)malloc(sizeof(* head));
+    head->rl=head;head->ll=head; ptr=head;
+    printf("1.insert\n2.delete\n3. display forward\n4.display reverse\n");
+    printf("enter choice");scanf("%d",&ch);
+    while(ch)
+    {
 
-                                scanf("%d",&(item->data));
-                                search(item, head, &pos);
-                                insert(item, pos, &head);
-                                break;
-                        case 2:
-                                printf("Enter item to be deleted");
-                                scanf("%d",&key);
-                                delete(&head, key);
-                                break;
-                        case 3:
-                                display(head);
-                                break;
-                        case 4:
-                                revdisplay(head);
-                                break;
-                }
-        }
+        switch(ch)
+        {
+            case 1:printf("enter data:");scanf("%d",&data);
+                   insert(data,ptr);break;
+            case 2:delete(ptr);break;
+            case 3:printf("forward direction\n");displayf(ptr); break;
+            case 4:printf("reverse direction\n");displayb(ptr); break;
+        } printf("enter choice");scanf("%d",&ch);
+    }
 }
