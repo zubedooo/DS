@@ -63,11 +63,10 @@ void main()
     node=(listp)malloc(sizeof(* node));
     head=(listp)malloc(sizeof(* head));
     head->rl=head;head->ll=head; ptr=head;
+    while(1)
+    {
     printf("1.insert\n2.delete\n3. display forward\n4.display reverse\n");
     printf("enter choice");scanf("%d",&ch);
-    while(ch)
-    {
-
         switch(ch)
         {
             case 1:printf("enter data:");scanf("%d",&data);
@@ -75,6 +74,6 @@ void main()
             case 2:delete(ptr);break;
             case 3:printf("forward direction\n");displayf(ptr); break;
             case 4:printf("reverse direction\n");displayb(ptr); break;
-        } printf("enter choice");scanf("%d",&ch);
+        }
     }
 }
