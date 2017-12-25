@@ -53,19 +53,6 @@ void inOrder(treeptr ptr)
 		inOrder(ptr->rlink);
 	}
 }
-treeptr queue[10];
-int front,rear;
-void addq(treeptr ptr)
-{
-	queue[rear++]=ptr;
-}
-treeptr deleteq()
-{
-	if(front!=rear)
-		return queue[front++];
-	return NULL;
-}
-}
 int main()
 {
 	treeptr root;
