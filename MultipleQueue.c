@@ -10,6 +10,7 @@ element data;
 struct node *link;
 }*queuepointer;
 queuepointer front[5]={NULL},rear[5]={NULL};
+
 element deleteq(int i)
 {
 queuepointer temp=front[i];
@@ -18,14 +19,13 @@ if(front[i]==NULL)
 printf("queue empty\n");
 else
         item=temp->data;
-front[i]=front[i]->link;
-
-
-return(item);
+        front[i]=front[i]->link;
+        return(item);
 }
+
 void addq(element item,int i)
 {
-queuepointer temp;
+    queuepointer temp;
     temp=(queuepointer)malloc(sizeof(*temp));
     temp->data=item;
     temp->link=NULL;
