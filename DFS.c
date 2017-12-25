@@ -83,24 +83,17 @@ void dfs(int v)
 int main()
 {
 	int i;
-	while(1)
-	{
-		printf("1. Create Graph \n2. Display Adjacency List \n3. DFS");
-		scanf("%d",&choice);
-		switch(choice)
-		{
-		case 1:
-			createGraph();
-			break;
-		case 2:
-			displayAdjList();
-			break;
-		case 3:
-			for(i=0;i<n;i++)
-				visited[i]=0;
-			dfs(0);
-			printf("\n");
-			break;
-		}
-	}
+	createGraph();
+	printf("Adjacency List\n");
+	displayAdjList();
+	 printf("DFS\n");
+
+   for(i=0;i<n;i++)
+
+   visited[i]=0;
+
+   dfs(0);
+
+   printf("\n");
+
 }
