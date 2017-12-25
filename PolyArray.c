@@ -7,7 +7,7 @@ typedef struct
     int coeff;
 }poly;
 int avail=0;
-void attach(float coeff, int expo, poly p[])
+void attach(int coeff, int expo, poly p[])
 {
     p[avail].coeff=coeff;
     p[avail].expo=expo;
